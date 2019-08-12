@@ -1,0 +1,187 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.OleDb;
+using System.Net.Mail;
+using System.Net;
+using System.IO;
+namespace SertifikaHazırlama
+{
+    public partial class Form1 : Form
+    {
+        bool surukleme = false;
+        Point ilkKonum;
+        Bitmap bm;
+        OleDbConnection con;
+        OpenFileDialog fileDialog = new OpenFileDialog();
+        OpenFileDialog fileDialog2 = new OpenFileDialog();
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            adSoyad.Parent = sertifikaPb;
+            adSoyad.BackColor = Color.Transparent; 
+            System.IO.Directory.CreateDirectory(desktopPath + "\\Sertifikalar");
+            
+
+        }
+
+        private void adSoyad_MouseDown(object sender, MouseEventArgs e)
+        {
+            surukleme = true;
+            ilkKonum = e.Location;
+
+        }
+
+        private void adSoyad_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (surukleme == true)
+            {
+                Point yeniKonum = adSoyad.Location;
+                yeniKonum.X += e.X - ilkKonum.X;
+                yeniKonum.Y += e.Y - ilkKonum.Y;
+                adSoyad.Location = yeniKonum;
+            }
+
+        }
+
+        private void adSoyad_MouseUp(object sender, MouseEventArgs e)
+        {
+            surukleme = false;
+        }
+
+        private void adSoyadFont_Click(object sender, EventArgs e)
+        {
+            fontDialog1.ShowColor = true;
+            fontDialog1.ShowEffects = true;
+            fontDialog1.ShowDialog();
+            adSoyad.Font = fontDialog1.Font;
+            adSoyad.ForeColor = fontDialog1.Color;
+        }
+        private void yazdir() {
+
+            Point p = new Point(adSoyad.Location.X, adSoyad.Location.Y);
+            Graphics g = Graphics.FromImage(sertifikaPb.Image);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            Brush b = new LinearGradientBrush(new Point(1, 1), new Point(100, 100), Color.FromArgb(255, adSoyad.ForeColor), Color.FromArgb(255, adSoyad.ForeColor));
+            g.DrawString(adSoyad.Text, fontDialog1.Font, b, p);
+        }
+        private void kaydet_Click(object sender, EventArgs e)
+        {
+            
+            SaveFileDialog sf=new SaveFileDialog();
+	        sf.Filter = "(*.jpg)|*.jpg";
+	        sf.ShowDialog();
+            yazdir();
+            bm.Save(sf.FileName,ImageFormat.Jpeg);
+        }
+
+        private void sertifikaYukle_Click(object sender, EventArgs e)
+        {
+            test();
+            
+	            
+        }
+        private void test()
+        {
+            if (!String.IsNullOrEmpty(fileDialog.FileName))
+            {
+                bm = new Bitmap(fileDialog.FileName);
+                sertifikaPb.Image = bm;
+            }
+            else
+            {
+                fileDialog.Filter = "Resim (*.jpg)|*.jpg";
+                fileDialog.ShowDialog();
+                bm = new Bitmap(fileDialog.FileName);
+                sertifikaPb.Image = bm;
+            }
+        }
+
+        private void excel_Click(object sender, EventArgs e)
+        {
+            excelFotoOlustur();
+            excelKontrolEt();
+            
+            
+        }
+        private void excelFotoOlustur()
+        {
+            fileDialog2.Filter = "Excel Dosyası (*.xlsx)|*.xlsx";
+            fileDialog2.ShowDialog();
+            if (!String.IsNullOrEmpty(fileDialog2.FileName))
+            {
+                string sql;
+                con = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileDialog2.FileName.ToString() + "; Extended Properties='Excel 12.0 xml;HDR=YES;'");
+                con.Open();
+
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.Connection = con;
+
+                sql = "select * from [Sayfa1$]";
+                cmd.CommandText = sql;
+                OleDbDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    adSoyad.Text = dr[0].ToString();
+                    yazdir();
+                    bm.Save(desktopPath+"\\Sertifikalar\\" + dr[0] + ".jpg", ImageFormat.Jpeg);
+                    test();
+                    MessageBox.Show("");
+                }
+                con.Close();
+            }
+        }
+        private void excelKontrolEt() {
+            string sql;
+            con = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileDialog2.FileName.ToString() + "; Extended Properties='Excel 12.0 xml;HDR=YES;'");
+            con.Open();
+            OleDbDataAdapter da = new OleDbDataAdapter("Select * from [Sayfa1$]", con);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            dataGridView1.DataSource = dt.DefaultView;
+            con.Close(); 
+        }
+        
+
+        private void mail_Click(object sender, EventArgs e)
+        {
+
+            gonder("szafiervevo@gmail.com","Zafer Çalışkan");
+        }
+        private void gonder(String email,string adsoyad)
+        {
+            MailMessage mail = new MailMessage();
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            mail.From = new MailAddress("ieeedpucs@gmail.com");
+            mail.To.Add(email);
+            mail.Subject = "TEST-Katılım Sertifikası";
+            mail.Body = adsoyad+" Etkinliğimize katıldığın için teşekkür ederiz";
+
+            System.Net.Mail.Attachment attachment;
+            attachment = new System.Net.Mail.Attachment("E:/"+adsoyad+".jpg");
+            mail.Attachments.Add(attachment);
+
+            SmtpServer.Port = 587;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("ieeedpucs@gmail.com", "DPU43ieeE");
+            SmtpServer.EnableSsl = true;
+
+            SmtpServer.Send(mail);
+
+        }
+    }
+}
