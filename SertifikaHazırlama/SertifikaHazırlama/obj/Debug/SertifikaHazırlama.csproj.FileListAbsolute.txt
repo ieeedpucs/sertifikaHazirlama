@@ -1,0 +1,13 @@
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\bin\Debug\SertifikaHazırlama.exe.config
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\bin\Debug\SertifikaHazırlama.exe
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\bin\Debug\SertifikaHazırlama.pdb
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csprojResolveAssemblyReference.cache
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.Form1.resources
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.Properties.Resources.resources
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csproj.GenerateResource.Cache
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.exe
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.pdb
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.Microsoft.Office.Core.dll
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.VBIDE.dll
+C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csproj.ResolveComReference.cache
