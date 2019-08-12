@@ -11,3 +11,17 @@ C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaH
 C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.Microsoft.Office.Interop.Excel.dll
 C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.VBIDE.dll
 C:\Users\k1\Documents\Visual Studio 2013\Projects\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csproj.ResolveComReference.cache
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\bin\Debug\SertifikaHazırlama.exe.config
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\bin\Debug\SertifikaHazırlama.exe
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\bin\Debug\SertifikaHazırlama.pdb
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csprojAssemblyReference.cache
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.Microsoft.Office.Core.dll
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.VBIDE.dll
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csproj.ResolveComReference.cache
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.Form1.resources
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.Properties.Resources.resources
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csproj.GenerateResource.cache
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csproj.CoreCompileInputs.cache
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.exe
+C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.pdb

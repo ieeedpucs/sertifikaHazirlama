@@ -81,13 +81,19 @@ namespace SertifikaHazırlama
             g.DrawString(adSoyad.Text, fontDialog1.Font, b, p);
         }
         private void kaydet_Click(object sender, EventArgs e)
-        {
-            
+        { 
+            try{
             SaveFileDialog sf=new SaveFileDialog();
 	        sf.Filter = "(*.jpg)|*.jpg";
 	        sf.ShowDialog();
             yazdir();
             bm.Save(sf.FileName,ImageFormat.Jpeg);
+            test();
+            }
+            catch{
+                test();
+            }                   
+            
         }
 
         private void sertifikaYukle_Click(object sender, EventArgs e)
@@ -135,14 +141,15 @@ namespace SertifikaHazırlama
                 sql = "select * from [Sayfa1$]";
                 cmd.CommandText = sql;
                 OleDbDataReader dr = cmd.ExecuteReader();
+                MessageBox.Show("Kaydetme İşlemi Başladı");
                 while (dr.Read())
                 {
                     adSoyad.Text = dr[0].ToString();
                     yazdir();
                     bm.Save(desktopPath+"\\Sertifikalar\\" + dr[0] + ".jpg", ImageFormat.Jpeg);
                     test();
-                    MessageBox.Show("");
                 }
+                dr.Close();
                 con.Close();
             }
         }
@@ -159,9 +166,26 @@ namespace SertifikaHazırlama
         
 
         private void mail_Click(object sender, EventArgs e)
-        {
+        { 
+            if (!String.IsNullOrEmpty(fileDialog2.FileName))
+            {
+               string sql;
+                con = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileDialog2.FileName.ToString() + "; Extended Properties='Excel 12.0 xml;HDR=YES;'");
+                con.Open();
 
-            gonder("szafiervevo@gmail.com","Zafer Çalışkan");
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.Connection = con;
+
+                sql = "select * from [Sayfa1$]";
+                cmd.CommandText = sql;
+                OleDbDataReader dr = cmd.ExecuteReader();
+                MessageBox.Show("Gönderme İşlemi Başladı");
+                while (dr.Read())
+                {
+                    gonder(dr[1].ToString(),dr[0].ToString());
+                }
+                con.Close();
+            }
         }
         private void gonder(String email,string adsoyad)
         {
@@ -173,15 +197,16 @@ namespace SertifikaHazırlama
             mail.Body = adsoyad+" Etkinliğimize katıldığın için teşekkür ederiz";
 
             System.Net.Mail.Attachment attachment;
-            attachment = new System.Net.Mail.Attachment("E:/"+adsoyad+".jpg");
-            mail.Attachments.Add(attachment);
+            /*attachment = new System.Net.Mail.Attachment("E:/"+adsoyad+".jpg");
+            mail.Attachments.Add(attachment);*/
 
             SmtpServer.Port = 587;
             SmtpServer.Credentials = new System.Net.NetworkCredential("ieeedpucs@gmail.com", "DPU43ieeE");
             SmtpServer.EnableSsl = true;
 
             SmtpServer.Send(mail);
-
+            
+            
         }
     }
 }
