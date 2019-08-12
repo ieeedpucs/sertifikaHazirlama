@@ -13,6 +13,8 @@ using System.Data.OleDb;
 using System.Net.Mail;
 using System.Net;
 using System.IO;
+
+
 namespace SertifikaHazırlama
 {
     public partial class Form1 : Form
@@ -120,10 +122,7 @@ namespace SertifikaHazırlama
 
         private void excel_Click(object sender, EventArgs e)
         {
-            excelFotoOlustur();
-            excelKontrolEt();
-            
-            
+            excelFotoOlustur(); 
         }
         private void excelFotoOlustur()
         {
@@ -131,6 +130,7 @@ namespace SertifikaHazırlama
             fileDialog2.ShowDialog();
             if (!String.IsNullOrEmpty(fileDialog2.FileName))
             {
+                int row = 0;
                 string sql;
                 con = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileDialog2.FileName.ToString() + "; Extended Properties='Excel 12.0 xml;HDR=YES;'");
                 con.Open();
@@ -141,35 +141,35 @@ namespace SertifikaHazırlama
                 sql = "select * from [Sayfa1$]";
                 cmd.CommandText = sql;
                 OleDbDataReader dr = cmd.ExecuteReader();
+                OleDbDataAdapter da = new OleDbDataAdapter("Select * from [Sayfa1$]", con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt.DefaultView;
+                dataGridView1.Columns.Add("sertifikaYolu", "Sertifika Yolu");
+                dataGridView1.Columns.Add("mailStatu", "Mail Durumu");
                 MessageBox.Show("Kaydetme İşlemi Başladı");
                 while (dr.Read())
                 {
                     adSoyad.Text = dr[0].ToString();
                     yazdir();
                     bm.Save(desktopPath+"\\Sertifikalar\\" + dr[0] + ".jpg", ImageFormat.Jpeg);
+                    dataGridView1.Rows[row++].Cells[3].Value = desktopPath + "\\Sertifikalar\\" + dr[0] + ".jpg";
                     test();
                 }
+
                 dr.Close();
                 con.Close();
             }
         }
-        private void excelKontrolEt() {
-            string sql;
-            con = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileDialog2.FileName.ToString() + "; Extended Properties='Excel 12.0 xml;HDR=YES;'");
-            con.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("Select * from [Sayfa1$]", con);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            dataGridView1.DataSource = dt.DefaultView;
-            con.Close(); 
-        }
-        
 
         private void mail_Click(object sender, EventArgs e)
         { 
+
+            
             if (!String.IsNullOrEmpty(fileDialog2.FileName))
             {
                string sql;
+                int row=0;
                 con = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileDialog2.FileName.ToString() + "; Extended Properties='Excel 12.0 xml;HDR=YES;'");
                 con.Open();
 
@@ -182,31 +182,46 @@ namespace SertifikaHazırlama
                 MessageBox.Show("Gönderme İşlemi Başladı");
                 while (dr.Read())
                 {
-                    gonder(dr[1].ToString(),dr[0].ToString());
+                    string isimDeger = dataGridView1.Rows[row].Cells[0].Value.ToString();
+                    string mailDeger = dataGridView1.Rows[row].Cells[1].Value.ToString();
+                    string pathDeger = dataGridView1.Rows[row].Cells[3].Value.ToString();
+                    gonder(isimDeger,mailDeger,pathDeger,row);
+                    row++;
                 }
+                MessageBox.Show("Gönderme İşlemi Bitti");
                 con.Close();
             }
         }
-        private void gonder(String email,string adsoyad)
+        private void gonder(string adsoyad, string email,string path,int row)
         {
-            MailMessage mail = new MailMessage();
-            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-            mail.From = new MailAddress("ieeedpucs@gmail.com");
-            mail.To.Add(email);
-            mail.Subject = "TEST-Katılım Sertifikası";
-            mail.Body = adsoyad+" Etkinliğimize katıldığın için teşekkür ederiz";
+            try {
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                mail.From = new MailAddress("ieeedpucs@gmail.com");
+                mail.To.Add(email);
+                mail.Subject = "TEST-Katılım Sertifikası";
+                mail.Body = adsoyad + " Etkinliğimize katıldığın için teşekkür ederiz";
 
-            System.Net.Mail.Attachment attachment;
-            /*attachment = new System.Net.Mail.Attachment("E:/"+adsoyad+".jpg");
-            mail.Attachments.Add(attachment);*/
+                System.Net.Mail.Attachment attachment;
+                attachment = new System.Net.Mail.Attachment(path);
+                mail.Attachments.Add(attachment);
 
-            SmtpServer.Port = 587;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("ieeedpucs@gmail.com", "DPU43ieeE");
-            SmtpServer.EnableSsl = true;
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("ieeedpucs@gmail.com", "DPU43ieeE");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(mail);
+                dataGridView1.Rows[row].Cells[4].Value = "Başarılı";
+                dataGridView1.Rows[row].Cells[4].Style.BackColor = Color.Green;
+            }
+            catch
+            {
+                dataGridView1.Rows[row].Cells[4].Value = "Başarısız";
+                dataGridView1.Rows[row].Cells[4].Style.BackColor = Color.Orange;
+            }
+        }
+        private void Button1_Click(object sender, EventArgs e)
+        {
 
-            SmtpServer.Send(mail);
-            
-            
         }
     }
 }

@@ -16,7 +16,6 @@ C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHaz�
 C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\bin\Debug\SertifikaHazırlama.pdb
 C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csprojAssemblyReference.cache
 C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.Microsoft.Office.Core.dll
-C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.Microsoft.Office.Interop.Excel.dll
 C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\Interop.VBIDE.dll
 C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.csproj.ResolveComReference.cache
 C:\Users\calis\OneDrive\Masaüstü\GitHub Repos\sertifikaHazirlama\SertifikaHazırlama\SertifikaHazırlama\obj\Debug\SertifikaHazırlama.Form1.resources
