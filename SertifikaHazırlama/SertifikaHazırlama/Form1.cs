@@ -72,15 +72,20 @@ namespace SertifikaHazırlama
             adSoyad.ForeColor = fontDialog1.Color;
         }
         private void yazdir() {
-
-            Point p = new Point(adSoyad.Location.X, adSoyad.Location.Y);
-            Graphics g = Graphics.FromImage(sertifikaPb.Image);
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-            Brush b = new LinearGradientBrush(new Point(1, 1), new Point(100, 100), Color.FromArgb(255, adSoyad.ForeColor), Color.FromArgb(255, adSoyad.ForeColor));
-            g.DrawString(adSoyad.Text, fontDialog1.Font, b, p);
+            try
+            {
+                Point p = new Point(adSoyad.Location.X, adSoyad.Location.Y);
+                Graphics g = Graphics.FromImage(sertifikaPb.Image);
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                Brush b = new LinearGradientBrush(new Point(1, 1), new Point(100, 100), Color.FromArgb(255, adSoyad.ForeColor), Color.FromArgb(255, adSoyad.ForeColor));
+                g.DrawString(adSoyad.Text, fontDialog1.Font, b, p);
+            }
+            catch (ArgumentNullException e) {
+                MessageBox.Show("Lütfen Sertifika Ekle");
+            }
         }
         private void kaydet_Click(object sender, EventArgs e)
         { 
@@ -106,23 +111,30 @@ namespace SertifikaHazırlama
         }
         private void test()
         {
-            if (!String.IsNullOrEmpty(fileDialog.FileName))
+            try
             {
-                bm = new Bitmap(fileDialog.FileName);
-                sertifikaPb.Image = bm;
+                if (!String.IsNullOrEmpty(fileDialog.FileName))
+                {
+                    bm = new Bitmap(fileDialog.FileName);
+                    sertifikaPb.Image = bm;
+                }
+                else
+                {
+                    fileDialog.Filter = "Resim (*.jpg)|*.jpg";
+                    fileDialog.ShowDialog();
+                    bm = new Bitmap(fileDialog.FileName);
+                    sertifikaPb.Image = bm;
+                }
             }
-            else
-            {
-                fileDialog.Filter = "Resim (*.jpg)|*.jpg";
-                fileDialog.ShowDialog();
-                bm = new Bitmap(fileDialog.FileName);
-                sertifikaPb.Image = bm;
-            }
+            catch { }
         }
 
         private void excel_Click(object sender, EventArgs e)
         {
-            excelFotoOlustur(); 
+            excelFotoOlustur();
+            mail.Visible = true;
+            sertifikaGoster.Visible = true;
+            mailProgressBar.Visible = true;
         }
         private void excelFotoOlustur()
         {
@@ -212,8 +224,9 @@ namespace SertifikaHazırlama
                 SmtpServer.Send(mail);
                 dataGridView1.Rows[row].Cells[4].Value = "Başarılı";
                 dataGridView1.Rows[row].Cells[4].Style.BackColor = Color.Green;
+                progressBar();
             }
-            catch
+            catch(Exception e)
             {
                 dataGridView1.Rows[row].Cells[4].Value = "Başarısız";
                 dataGridView1.Rows[row].Cells[4].Style.BackColor = Color.Orange;
@@ -221,7 +234,15 @@ namespace SertifikaHazırlama
         }
         private void Button1_Click(object sender, EventArgs e)
         {
-
+            string myPath = desktopPath+"/Sertifikalar";
+            System.Diagnostics.Process prc = new System.Diagnostics.Process();
+            prc.StartInfo.FileName = myPath;
+            prc.Start();
+        }
+        private void progressBar() {
+            int a = dataGridView1.Rows.Count;
+            mailProgressBar.Maximum = a - 1;
+            mailProgressBar.Increment(1);
         }
     }
 }
