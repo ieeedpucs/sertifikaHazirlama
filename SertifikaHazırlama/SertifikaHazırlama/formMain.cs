@@ -247,7 +247,7 @@ namespace SertifikaHazırlama
                 progressBar();
             }
             catch(Exception e)
-            {9
+            {
                 frm2.dataGridView1.Rows[row].Cells[3].Value = "Başarısız";
                 frm2.dataGridView1.Rows[row].Cells[3].Style.BackColor = Color.Orange;
             }
